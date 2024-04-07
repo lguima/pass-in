@@ -3,6 +3,8 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type BadgeStore = {
+  id: string
+  name: string
   email: string
   eventTitle: string
   checkInURL: string
