@@ -34,10 +34,11 @@ export default function Register() {
       if (response.data.attendeeId) {
         Alert.alert('Inscrição', 'Inscrição realizada com sucesso.', [
           { text: 'OK', onPress: () => router.push('/ticket') }
-        ])
+        ]);
       }
     } catch(error) {
       console.error(error);
+      setIsLoading(false);
 
       if (axios.isAxiosError(error)) {
         if (String(error.response?.data.message).includes('already registered')) {
@@ -46,8 +47,6 @@ export default function Register() {
       }
 
       Alert.alert('Inscrição', 'Não foi possível fazer a inscrição');
-    } finally {
-      setIsLoading(false);
     }
   }
 
