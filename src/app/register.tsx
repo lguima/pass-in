@@ -7,6 +7,7 @@ import axios from 'axios';
 import { colors } from '@/styles/colors';
 
 import { api } from '@/server/api';
+import { useBadgeStore } from '@/store/badge-store'
 
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button'
@@ -18,6 +19,8 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const badgeStore = useBadgeStore();
+
   async function handleRegister() {
     try {
       if (!name.trim() || !email.trim()) {
@@ -26,12 +29,16 @@ export default function Register() {
 
       setIsLoading(true);
 
-      const response = await api.post(`/events/${EVENT_ID}/attendees`, {
+      const { data: registerData } = await api.post(`/events/${EVENT_ID}/attendees`, {
         name,
         email,
       });
 
-      if (response.data.attendeeId) {
+      if (registerData.attendeeId) {
+        const { data: badgeData } = await api.get(`/attendees/${registerData.attendeeId}/badge`);
+
+        badgeStore.save(badgeData.badge);
+
         Alert.alert('Inscrição', 'Inscrição realizada com sucesso.', [
           { text: 'OK', onPress: () => router.push('/ticket') }
         ]);
