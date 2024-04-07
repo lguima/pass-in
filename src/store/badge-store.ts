@@ -5,20 +5,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export type BadgeStore = {
   email: string
   eventTitle: string
-  checkInUrl: string
+  checkInURL: string
   image?: string
 }
 
 type StateProps = {
   data: BadgeStore | null
   save: (data: BadgeStore) => void
+  remove: () => void
 }
 
 export const useBadgeStore = create(
   persist<StateProps>(
     (set) => ({
       data: null,
-      save: (data: BadgeStore) => set(() => ({ data }))
+      save: (data: BadgeStore) => set(() => ({ data })),
+      remove: () => set(() => ({ data: null })),
     }), {
       name: 'nlw-unite:badge',
       storage: createJSONStorage(() => AsyncStorage),
