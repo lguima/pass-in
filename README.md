@@ -12,6 +12,10 @@
 - [TypeScript](https://www.typescriptlang.org)
 - [Expo](https://expo.io)
 
+# Development
+
+Code developed using [WSL2 (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install). [[Expo FYI](https://expo.fyi/wsl)]
+
 # Credits
 
 Project made by [@lguima](https://github.com/lguima) during the **Next Level Week Unite** from [Rocketseat](https://rocketseat.com.br).
