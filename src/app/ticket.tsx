@@ -1,15 +1,18 @@
-import { Alert, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Modal, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons'
 
 import { colors } from "@/styles/colors";
+
 import { Credential } from '@/components/Credential';
 import { Header } from '@/components/Header';
 import { Button } from "@/components/Button";
+import { QRCode } from "@/components/QRCode";
 
 export default function Ticket() {
   const [image, setImage] = useState('');
+  const [qrCodeExpanded, setQRCodeExpanded] = useState(false);
 
   async function handleSelectImage() {
     try {
@@ -42,6 +45,7 @@ export default function Ticket() {
         <Credential
           image={image}
           onChangeAvatar={handleSelectImage}
+          onExpandQRCode={() => setQRCodeExpanded(true)}
         />
         <FontAwesome
           name="angle-double-down"
@@ -69,6 +73,32 @@ export default function Ticket() {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <Modal
+        visible={qrCodeExpanded}
+        statusBarTranslucent
+        animationType="slide"
+      >
+        <View
+          className="flex-1 bg-green-500 items-center justify-center"
+        >
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setQRCodeExpanded(false)}
+          >
+            <QRCode
+              value="Testando"
+              size={300}
+            />
+
+            <Text
+              className="mt-10 font-body text-orange-500 text-sm text-center"
+            >
+              Diminuir QR Code
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
   </View>
   )
 }
