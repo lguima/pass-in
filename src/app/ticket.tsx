@@ -2,8 +2,11 @@ import { Alert, Modal, ScrollView, StatusBar, Text, TouchableOpacity, View } fro
 import { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons'
+import { Redirect } from 'expo-router';
 
 import { colors } from "@/styles/colors";
+
+import { useBadgeStore } from '@/store/badge-store'
 
 import { Credential } from '@/components/Credential';
 import { Header } from '@/components/Header';
@@ -13,6 +16,8 @@ import { QRCode } from "@/components/QRCode";
 export default function Ticket() {
   const [image, setImage] = useState('');
   const [qrCodeExpanded, setQRCodeExpanded] = useState(false);
+
+  const badgeStore = useBadgeStore();
 
   async function handleSelectImage() {
     try {
@@ -29,6 +34,10 @@ export default function Ticket() {
       console.error(error);
       Alert.alert('Foto', 'Não foi possível selecionar a imagem.');
     }
+  }
+
+  if (!badgeStore.data?.checkInURL) {
+    return <Redirect href='/' />
   }
 
   return (
@@ -67,6 +76,7 @@ export default function Ticket() {
         <TouchableOpacity
           activeOpacity={0.7}
           className="mt-10"
+          onPress={badgeStore.remove}
         >
           <Text className="text-base text-red-500 font=bold text-center">
             Remover Ingresso
