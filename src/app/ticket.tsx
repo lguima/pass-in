@@ -3,6 +3,7 @@ import { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons'
 import { Redirect } from 'expo-router';
+import { MotiView } from 'moti'
 
 import { colors } from "@/styles/colors";
 
@@ -68,12 +69,27 @@ export default function Ticket() {
           onChangeAvatar={handleSelectImage}
           onExpandQRCode={() => setQRCodeExpanded(true)}
         />
-        <FontAwesome
-          name="angle-double-down"
-          size={24}
-          color={colors.gray[300]}
-          className="self-center my-6"
-        />
+
+        <MotiView
+          from={{
+            translateY: 0,
+          }}
+          animate={{
+            translateY: 10,
+          }}
+          transition={{
+            loop: true,
+            type: "timing",
+            duration: 700,
+          }}
+        >
+          <FontAwesome
+            name="angle-double-down"
+            size={24}
+            color={colors.gray[300]}
+            className="self-center my-6"
+          />
+        </MotiView>
 
         <Text className="text-white font-bold text-2xl mt-4">
           Compartilhar credencial
